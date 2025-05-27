@@ -2,28 +2,40 @@
 #define MY_LIBRARY_H
 
 #include <iostream>
-#include <vector>
+#include <fstream>
+#include <string>
+#include <map>
 #include <set>
 #include <unordered_set>
-#include <algorithm>
-#include <chrono>
-#include <random>
-#include <fstream>
-#include <map>
+#include <vector>
 #include <cctype>
+#include <sstream>
+#include <regex>
+#include <filesystem>
+#include <iomanip>
+#include <locale>
 
 using std::cout;
+using std::cerr;
+using std::cin;
 using std::endl;
+using std::ifstream;
+using std::ofstream;
+using std::string;
+using std::tolower;
+using std::isalpha;
+using std::isdigit;
+using std::stringstream;
+using std::istringstream;
+using std::regex;
+using std::smatch;
 using std::vector;
+using std::map;
 using std::set;
 using std::unordered_set;
-using std::find;
-using std::mt19937;
-using std::random_device;
-using std::uniform_int_distribution;
-using std::chrono::high_resolution_clock;
-using std::chrono::duration_cast;
-using std::chrono::microseconds;
-using std::chrono::milliseconds;
+using std::filesystem::directory_iterator;
+using std::setw;
+using std::left;
+using std::right;
 
 #endif // MY_LIBRARY_H
