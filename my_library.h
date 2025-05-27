@@ -14,6 +14,9 @@
 #include <filesystem>
 #include <iomanip>
 #include <locale>
+#include <stdexcept> 
+#include <exception> 
+#include <limits>   
 
 using std::cout;
 using std::cerr;
@@ -37,5 +40,7 @@ using std::filesystem::directory_iterator;
 using std::setw;
 using std::left;
 using std::right;
+using std::runtime_error;
+using std::exception;
 
 #endif // MY_LIBRARY_H
