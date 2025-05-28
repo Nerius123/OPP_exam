@@ -40,7 +40,7 @@ void suskaiciuoti_zodzius(const string &failo_pavadinimas, const string &rezulta
             }
         }
         rezultatai.close();
-        cout << "Rezultatai irasyti i --> '" << rezultatu_failas << "'\n";
+        cout << "Rezultatai irasyti i ==> '" << rezultatu_failas << "'\n";
     }
     catch (const exception &e) {
         cerr << "Klaida [zodziu skaiciavimas]: " << e.what() << endl;
@@ -78,13 +78,12 @@ void cross_reference_lentele(const string &failo_pavadinimas, const string &rezu
             throw runtime_error("Nepavyko sukurti rezultatu failo: " + rezultatu_failas);
         }
 
-        const int stulpelio_plotis = 24;
-        rezultatai << left << setw(stulpelio_plotis) << "Zodis" << "Eilutes" << endl;
-        rezultatai << string(stulpelio_plotis, '-') << " " << string(40, '-') << endl;
+        rezultatai << left << setw(28) << "Zodis" << " | Eilutes" << endl;
+        rezultatai << string(28, '-') << "-+-" << string(40, '-') << endl;
 
         for (const auto &[zodis, eilutes] : zodziu_eilutes) {
             if (zodziu_kiekis[zodis] > 1) {
-                rezultatai << left << setw(stulpelio_plotis) << zodis;
+                rezultatai << left << setw(28) << zodis << " | ";
                 bool pirmas = true;
                 for (int e : eilutes) {
                     if (!pirmas) rezultatai << ", ";
@@ -95,7 +94,7 @@ void cross_reference_lentele(const string &failo_pavadinimas, const string &rezu
             }
         }
         rezultatai.close();
-        cout << "Cross-reference lentele irasyta i --> '" << rezultatu_failas << "'\n";
+        cout << "Cross-reference lentele irasyta i ==> '" << rezultatu_failas << "'\n";
     }
     catch (const exception &e) {
         cerr << "Klaida [cross-reference]: " << e.what() << endl;
