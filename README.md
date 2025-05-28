@@ -1,12 +1,5 @@
 # Objektinio programavimo (išankstinė) egzamino užduotis
 
-# Programos aprašymas
-
-Ši programa analizuoja teksto failus ir atlieka tris pagrindines užduotis:
-1. **Suskačiuoja, kiek kartų kiekvienas skirtingas žodis pasikartoja tekste.**
-2. **Sukuria "cross-reference" tipo lentelę**, nurodančią, kuriose teksto eilutėse žodis buvo paminėtas.
-3. **Iš teksto ištraukia visus URL adresus.**
-
 # Kompiuterio specifikacijos
 
 | Komponentas |             Specifikacija                 |
@@ -15,23 +8,59 @@
 | RAM         |             16GB DDR4 </br>               |
 | DISK        |             SATA SSD </br>                |
 
-# Projekto atsisiuntimo instrukcija
+# Projekto atsisiuntimo ir paleidimo instrukcija
 
 ## 1. Reikalingų įrankių atsisiuntimas
 
 - [Atsisiusti g++ (GCC kompiliatorius)](https://sourceforge.net/projects/mingw-w64/)
-- [Atsisiusti Make](https://gnuwin32.sourceforge.net/packages/make.htm)
+- [Atsisiųsti Make](https://gnuwin32.sourceforge.net/packages/make.htm)
 
 ---
 
 ## 2. Projekto atsisiuntimas
 
-```bash
-- Kopijuoti projekto direktorija `git clone https://github.com/Nerius123/OPP_exam.git`
-```
+
+- Kopijuoti projekto direktoriją `git clone https://github.com/Nerius123/OPP_exam.git`
 ---
 
-# Naudojamos C++ savybės
+## 3. Projekto paleidimas
+
+Atsidaryti komandinę eilutę (cmd), nueiti į folder'į kuriam yra programa ir į ją įvesti:
+```bash
+g++ main.cpp function.cpp -o programa && programa
+```
+Jei naudojate cmake: 
+
+```bash
+mkdir build
+cd build
+cmake ..
+cmake --build .
+./analyze;
+``` 
+
+# Programos naudojimas
+
+1. Į `input/` katalogą įdėkite bent vieną `.txt` failą analizei.
+2. Paleidus programą, bus pateiktas failų sąrašas.
+3. Įveskite norimo failo numerį.
+4. Programa automatiškai:
+   - Suskaičiuos pasikartojančius žodžius.
+   - Sugeneruos lentelę su žodžių paminėjimo eilutėmis.
+   - Ištrauks visus URL adresus.
+5. Rezultatai bus išsaugoti `output/` kataloge:
+   - `zodziu_dazniai.txt`
+   - `cross_reference.txt`
+   - `rasti_url.txt`
+
+# Programos aprašymas
+
+Ši programa analizuoja teksto failus ir atlieka tris pagrindines užduotis:
+1. **Suskaičiuoja, kiek kartų kiekvienas skirtingas žodis pasikartoja tekste.**
+2. **Sukuria "cross-reference" tipo lentelę**, nurodančią, kuriose teksto eilutėse žodis buvo paminėtas.
+3. **Iš teksto ištraukia visus URL adresus.**
+
+## Naudojamos C++ savybės
 
 | Naudojama | Paaiškinimas |
 |-----------|--------------|
@@ -44,13 +73,15 @@
 
 ---
 
-## Naudojamos programos ir kam jos skirtos
+# Failų/katalogų paskirtis
 
-- input/ # Teksto failai, kuriuos vartotojas pasirenka analizei
-- output/ # Automatiškai sugeneruoti rezultatai
-- main.cpp # Pagrindinis failas (meniu ir paleidimas)
-- function.cpp # Visos analizės funkcijos
-- function.h # Funkcijų deklaracijos
-- my_library.h # Visos bibliotekos ir alias'ai
-- CMakeLists.txt # CMake konfigūracinis failas
-- README.md # Šis dokumentas
+| Failas / Aplankas   | Paskirtis |
+|---------------------|-----------|
+| `input/`            | Vartotojo įkeliami `.txt` failai |
+| `output/`           | Rezultatai: žodžių skaičius, lentelė, URL |
+| `main.cpp`          | Vartotojo sąsaja ir paleidimas |
+| `function.cpp`      | Analizės logika |
+| `function.h`        | Funkcijų deklaracijos |
+| `my_library.h`      | Visos naudojamos bibliotekos |
+| `CMakeLists.txt`    | Kompiliavimo instrukcijos per CMake |
+| `README.md`         | Šis dokumentas |
