@@ -20,7 +20,7 @@ int main() {
         return 1;
     }
 
-    // Atspausdinti sąrašą
+    // Atspausdinti failus
     for (size_t i = 0; i < txt_failai.size(); ++i) {
         cout << "[" << i + 1 << "] " << txt_failai[i] << "\n";
     }

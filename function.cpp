@@ -113,7 +113,7 @@ void rasti_url_adresus(const string &failo_pavadinimas, const string &rezultatu_
             throw runtime_error("Nepavyko sukurti rezultatu failo: " + rezultatu_failas);
         }
 
-        // Regex apima: https://, http://, www., ar vien domeną su galūne
+        // Regex apima: https://, http://, www., ar vien domena su galune
         const regex url_regex(R"((https?:\/\/)?(www\.)?[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}(\S*)?)");
 
         string eilute;
