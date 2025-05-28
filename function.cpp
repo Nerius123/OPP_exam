@@ -100,3 +100,39 @@ void cross_reference_lentele(const string &failo_pavadinimas, const string &rezu
         cerr << "Klaida [cross-reference]: " << e.what() << endl;
     }
 }
+
+void rasti_url_adresus(const string &failo_pavadinimas, const string &rezultatu_failas) {
+    try {
+        ifstream failas(failo_pavadinimas);
+        if (!failas) {
+            throw runtime_error("Nepavyko atidaryti failo: " + failo_pavadinimas);
+        }
+
+        ofstream rezultatai(rezultatu_failas);
+        if (!rezultatai) {
+            throw runtime_error("Nepavyko sukurti rezultatu failo: " + rezultatu_failas);
+        }
+
+        // Regex apima: https://, http://, www., ar vien domeną su galūne
+        const regex url_regex(R"((https?:\/\/)?(www\.)?[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}(\S*)?)");
+
+        string eilute;
+        int eil_nr = 1;
+        while (getline(failas, eilute)) {
+            smatch atitikmuo;
+            string likusi = eilute;
+            while (regex_search(likusi, atitikmuo, url_regex)) {
+                rezultatai << "Rasta eiluteje " << eil_nr << ": " << atitikmuo[0] << "\n";
+                likusi = atitikmuo.suffix();
+            }
+            eil_nr++;
+        }
+
+        failas.close();
+        rezultatai.close();
+        cout << "URL'ai irasyti i ==> '" << rezultatu_failas << "'\n";
+    }
+    catch (const exception &e) {
+        cerr << "Klaida [URL paieska]: " << e.what() << endl;
+    }
+}
