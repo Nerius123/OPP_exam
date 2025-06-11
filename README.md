@@ -48,10 +48,12 @@ cmake --build .
    - Suskaičiuos pasikartojančius žodžius.
    - Sugeneruos lentelę su žodžių paminėjimo eilutėmis.
    - Ištrauks visus URL adresus.
+   - Išfiltruos ir įrašys visus žodžius, kuriuose yra nurodyta dalis (pvz. `"tor"`).
 5. Rezultatai bus išsaugoti `output/` kataloge:
    - `zodziu_dazniai.txt`
    - `cross_reference.txt`
    - `rasti_url.txt`
+   - `zodziai_su_dalis.txt`
 
 # Programos aprašymas
 
@@ -59,6 +61,8 @@ cmake --build .
 1. **Suskaičiuoja, kiek kartų kiekvienas skirtingas žodis pasikartoja tekste.**
 2. **Sukuria "cross-reference" tipo lentelę**, nurodančią, kuriose teksto eilutėse žodis buvo paminėtas.
 3. **Iš teksto ištraukia visus URL adresus.**
+4. **Ieško visų žodžių, kurie turi nurodytą žodžio dalį** (pvz. `"tor"` aptiks `toronto`, `vector`, `tornado` ir pan.). Rezultate pateikiami tik **unikalūs** žodžiai, ignoruojant pasikartojimus.
+
 
 ## Naudojamos C++ savybės
 
