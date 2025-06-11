@@ -45,6 +45,14 @@ int main() {
     cross_reference_lentele(pasirinktas_failas, "output/cross_reference.txt");
     rasti_url_adresus(pasirinktas_failas, "output/rasti_url.txt");
 
+    
+    // Papildoma uzduotis: surasti zodzius su ivesta dalimi
+    string dalis;
+    cout << "\nIveskite zodzio dali, kurios ieskoti: ";
+    cin >> dalis;
+    rasti_zodzius_su_dalis(pasirinktas_failas, "output/rasti_substring.txt", dalis);
+
+
 
     return 0;
 }

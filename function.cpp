@@ -101,7 +101,7 @@ void cross_reference_lentele(const string &failo_pavadinimas, const string &rezu
     }
 }
 
-void rasti_url_adresus(const string &failo_pavadinimas, const string &rezultatu_failas) {
+void rasti_url_adresus(const string& failo_pavadinimas, const string& rezultatu_failas) {
     try {
         ifstream failas(failo_pavadinimas);
         if (!failas) {
@@ -113,18 +113,40 @@ void rasti_url_adresus(const string &failo_pavadinimas, const string &rezultatu_
             throw runtime_error("Nepavyko sukurti rezultatu failo: " + rezultatu_failas);
         }
 
-        // Regex apima: https://, http://, www., ar vien domena su galune
-        const regex url_regex(R"((https?:\/\/)?(www\.)?[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}(\S*)?)");
+        vector<string> atmestini = {".docx", ".pdf", ".mp3", ".mp4", ".txt", ".pas", ".zip"};
+
+        const regex url_regex(R"((https?:\/\/[^\s]+)|(www\.[^\s]+)|\b[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}\b)");
 
         string eilute;
         int eil_nr = 1;
+
         while (getline(failas, eilute)) {
             smatch atitikmuo;
             string likusi = eilute;
+
             while (regex_search(likusi, atitikmuo, url_regex)) {
-                rezultatai << "Rasta eiluteje " << eil_nr << ": " << atitikmuo[0] << "\n";
+                string url = atitikmuo[0];
+
+                // Pasalinam gale esancius skyrybos zenklus
+                while (!url.empty() && ispunct(url.back()) && url.back() != '/' && url.back() != '-') {
+                    url.pop_back();
+                }
+
+                bool atmesti = false;
+                for (const string& ext : atmestini) {
+                    if (url.size() >= ext.size() && url.substr(url.size() - ext.size()) == ext) {
+                        atmesti = true;
+                        break;
+                    }
+                }
+
+                if (!atmesti) {
+                    rezultatai << "Rasta eiluteje " << eil_nr << ": " << url << "\n";
+                }
+
                 likusi = atitikmuo.suffix();
             }
+
             eil_nr++;
         }
 
@@ -132,7 +154,39 @@ void rasti_url_adresus(const string &failo_pavadinimas, const string &rezultatu_
         rezultatai.close();
         cout << "URL'ai irasyti i ==> '" << rezultatu_failas << "'\n";
     }
-    catch (const exception &e) {
+    catch (const exception& e) {
         cerr << "Klaida [URL paieska]: " << e.what() << endl;
+    }
+}
+
+void rasti_zodzius_su_dalis(const string &failo_pavadinimas, const string &rezultatu_failas, const string &dalis) {
+    try {
+        ifstream failas(failo_pavadinimas);
+        if (!failas) throw runtime_error("Nepavyko atidaryti failo: " + failo_pavadinimas);
+
+        set<string> zodziai_su_dalis;
+        string zodis;
+        while (failas >> zodis) {
+            string svarus = apvalyk_zodi(zodis);
+            if (!svarus.empty() && svarus.find(dalis) != string::npos) {
+                zodziai_su_dalis.insert(svarus);
+            }
+        }
+
+        failas.close();
+
+        ofstream rezultatai(rezultatu_failas);
+        if (!rezultatai) throw runtime_error("Nepavyko sukurti failo: " + rezultatu_failas);
+
+        rezultatai << "Zodziai, turintys '" << dalis << "':\n";
+        for (const auto &z : zodziai_su_dalis) {
+            rezultatai << z << "\n";
+        }
+
+        rezultatai.close();
+        cout << "Zodziai su dalimi '" << dalis << "' irasyti i ==> '" << rezultatu_failas << "'\n";
+    }
+    catch (const exception &e) {
+        cerr << "Klaida [zodziu paieska su dalimi]: " << e.what() << endl;
     }
 }
